@@ -21,8 +21,8 @@ const Map = () => {
   )
 }
 
-const Wrapper = tw.div`
-  bg-red-500 flex-1
-`
-
 export default Map
+
+const Wrapper = tw.div`
+  flex-1
+`

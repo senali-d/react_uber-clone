@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import Link from 'next/link'
 import tw from 'tailwind-styled-components'
 import Map from './components/Map'
 
@@ -16,10 +16,12 @@ export default function Home() {
           </Profile>
         </Header>
         <ActionButtons>
-          <ActionButton>
-            <ActionButtonImage src="https://i.ibb.co/cyvcpfF/uberx.png" />
-            Ride
-          </ActionButton>
+          <Link href="/search">
+            <ActionButton>
+              <ActionButtonImage src="https://i.ibb.co/cyvcpfF/uberx.png" />
+              Ride
+            </ActionButton>
+          </Link>
           <ActionButton>
             <ActionButtonImage src="https://i.ibb.co/n776JLm/bike.png" />
             Whells
@@ -68,7 +70,7 @@ const ActionButtons = tw.div`
 `
 
 const ActionButton = tw.div`
-  bg-gray-200 flex-1 m-1 flex flex-col justify-center items-center rounded-lg transform hover:scale-105 transition text-xl
+  bg-gray-200 flex-1 m-1 flex flex-col justify-center items-center rounded-lg transform hover:scale-105 transition text-xl cursor-pointer
 `
 const ActionButtonImage = tw.img`
   h-3/5
