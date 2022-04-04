@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import tw from 'tailwind-styled-components'
 import Map from './components/Map'
 
 const Confirm = () => {
-
   const [pickupCoordiantes, setPickupCoordiantes] = useState()
   const [dropoffCoordiantes, setDropoffCoordiantess] = useState()
 
-  useEffect(() => {
-    getPickupCoordiantes()
-    getDropoffCoordiantes()
-  }, [])
+  const router = useRouter()
+  const { pickup, dropoff } = router.query
 
-  const getPickupCoordiantes = () => {
-    const pickup = "Santa Monica"
+  useEffect(() => {
+    getPickupCoordiantes(pickup)
+    getDropoffCoordiantes(dropoff)
+  }, [pickup, dropoff])
+
+  const getPickupCoordiantes = (pickup) => {
     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pickup}.json?` +
       new URLSearchParams({
         access_token: "pk.eyJ1IjoiemVuZGVzazk4NyIsImEiOiJjbDFpNzY0dGwwZWFxM2ZweXNjMGhxMDQ0In0.ieVpU3hBiBgEny-hzvr0QA",
@@ -26,8 +28,7 @@ const Confirm = () => {
       })
   }
 
-  const getDropoffCoordiantes = () => {
-    const dropoff = "Los Angeles"
+  const getDropoffCoordiantes = (dropoff) => {
     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${dropoff}.json?` +
       new URLSearchParams({
         access_token: "pk.eyJ1IjoiemVuZGVzazk4NyIsImEiOiJjbDFpNzY0dGwwZWFxM2ZweXNjMGhxMDQ0In0.ieVpU3hBiBgEny-hzvr0QA",
