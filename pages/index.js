@@ -1,8 +1,30 @@
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
 import tw from 'tailwind-styled-components'
 import Map from './components/Map'
+import { auth } from '../firebase'
+import Router from 'next/router'
 
 export default function Home() {
+
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    return onAuthStateChanged(auth, user => {
+      if (user) {
+        console.log(user.photoURL)
+        setUser({
+          name: user.displayName,
+          photoUrl: user.photoURL
+        })
+      } else {
+        setUser(null)
+        Router.push('/login')
+      }
+    })
+  }, [])
 
   return (
     <Wrapper>
@@ -11,8 +33,8 @@ export default function Home() {
         <Header>
           <UberLogo src="https://i.ibb.co/84stgjq/uber-tecnologies-new-20218114.jpg" />
           <Profile>
-            <Name>Rafeh Quazi</Name>
-            <UserImage src="https://i0.wp.com/newdoorfiji.com/wp-content/uploads/2018/03/profile-img-1.jpg?ssl=1" />
+            <Name>{user && user.name}</Name>
+            <UserImage src={user && user.photoUrl} onClick={() => signOut(auth)} />
           </Profile>
         </Header>
         <ActionButtons>
@@ -62,7 +84,7 @@ const Name = tw.div`
 `
 
 const UserImage = tw.img`
-  h-12 w-12 rounded-full border border-gray-200 p-px
+  h-12 w-12 rounded-full border border-gray-200 p-px hover:scale-110 mr-4 mt-2
 `
 
 const ActionButtons = tw.div`
