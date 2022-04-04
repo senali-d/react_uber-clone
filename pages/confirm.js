@@ -6,8 +6,8 @@ import Map from './components/Map'
 import RideSelector from './components/RideSelector'
 
 const Confirm = () => {
-  const [pickupCoordiantes, setPickupCoordiantes] = useState()
-  const [dropoffCoordiantes, setDropoffCoordiantess] = useState()
+  const [pickupCoordiantes, setPickupCoordiantes] = useState([0, 0])
+  const [dropoffCoordiantes, setDropoffCoordiantess] = useState([0, 0])
 
   const router = useRouter()
   const { pickup, dropoff } = router.query
@@ -45,14 +45,17 @@ const Confirm = () => {
 
   return (
     <Wrapper>
-      <Link href="/">
+      <Link href="/search">
         <ButtonContainer>
           <BackButton src="https://img.icons8.com/ios-filled/50/000000/left.png" />
         </ButtonContainer>
       </Link>
       <Map pickupCoordiantes={pickupCoordiantes} dropoffCoordiantes={dropoffCoordiantes} />
       <RideContainer>
-        <RideSelector />
+        <RideSelector
+          pickupCoordiantes={pickupCoordiantes}
+          dropoffCoordiantes={dropoffCoordiantes}
+        />
         <ConfirmButtonContainer>
           <ConfirmButton>
             Confirm Uberx
